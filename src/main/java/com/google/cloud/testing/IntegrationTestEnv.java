@@ -45,8 +45,6 @@ public class IntegrationTestEnv extends ExternalResource {
   private static final Logger logger = Logger.getLogger(IntegrationTestEnv.class.getName());
 
   private TestEnvConfig config;
-  private InstanceAdminClient instanceAdminClient;
-  private DatabaseAdminClient databaseAdminClient;
   private boolean isOwnedInstance;
   private final boolean alwaysCreateNewInstance;
   private RemoteSpannerHelper testHelper;
@@ -95,8 +93,6 @@ public class IntegrationTestEnv extends ExternalResource {
       isOwnedInstance = true;
     }
     testHelper = createTestHelper(options, instanceId);
-    instanceAdminClient = testHelper.getClient().getInstanceAdminClient();
-    databaseAdminClient = testHelper.getClient().getDatabaseAdminClient();
     logger.log(Level.FINE, "Test env endpoint is {0}", options.getHost());
     if (isOwnedInstance) {
       initializeInstance(instanceId);
