@@ -21,7 +21,6 @@ import com.google.cloud.spanner.KeyRange;
 import com.google.cloud.spanner.KeySet;
 import com.google.cloud.spanner.Mutation;
 import com.google.cloud.spanner.Options;
-import com.google.cloud.spanner.ParallelIntegrationTest;
 import com.google.cloud.spanner.ResultSet;
 import com.google.cloud.spanner.SpannerException;
 import com.google.cloud.spanner.Struct;
@@ -56,7 +55,6 @@ import org.junit.runners.Parameterized;
  * <p>See also {@link ITWriteTest}, which provides coverage of writing and reading back all Cloud
  * Spanner types.
  */
-@Category(ParallelIntegrationTest.class)
 @RunWith(Parameterized.class)
 public class TestCase {
   @ClassRule public static IntegrationTestEnv env = new IntegrationTestEnv();

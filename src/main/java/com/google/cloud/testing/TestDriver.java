@@ -1,5 +1,6 @@
 package com.google.cloud.testing;
 
+import com.google.cloud.spanner.SpannerOptions;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,15 +28,15 @@ public class TestDriver {
 
     private CountDownLatch startLatch;
     private final int proxyPort = 5431;
-    private final int spannerPort;
+    private final SpannerOptions options;
     private final int numStartAttempts = 3;
     private final int startTimeoutSeconds = 30;
     private Thread proxyThread;
     private Process proxy;
     private Status status;
     
-    public TestDriver(int spannerPort) {
-        this.spannerPort = spannerPort;
+    public TestDriver(SpannerOptions options) {
+        this.options = options;
     }
     
     public Status Setup() {
@@ -79,7 +80,7 @@ public class TestDriver {
         }
     }
 
-    public boolean executeArtifact() {
+    private boolean executeArtifact() {
         Preconditions.checkState(startLatch.getCount() > 0, "startLatch already counted down");
 
         List<String> command = new ArrayList<>();
@@ -90,8 +91,9 @@ public class TestDriver {
         command.add(ARTIFACT_PATH);
         command.add("--proxy_port");
         command.add("" + proxyPort);
-        command.add("--spanner_port");
-        command.add("" + spannerPort);
+
+        command.add("--spanner_endpoint");
+        command.add("" + options.getEndpoint());
         // command.add("--cert");
         // command.add("cert.pem");
 
